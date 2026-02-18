@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 // ✅ CORS Setup
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:4173"], // frontend URL
+    origin: ["http://localhost:5173", "http://localhost:4173", "https://portfolio-client-iber.onrender.com"], // frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
