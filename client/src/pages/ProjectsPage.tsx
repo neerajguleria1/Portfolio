@@ -1,8 +1,16 @@
 import { TrendingUp, Users, Clock } from 'lucide-react';
 import { useRouter } from '../router';
+import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
+import { useScrollReveal } from '../lib/useScrollReveal';
+import { usePerformanceMonitor } from '../lib/performance';
+import analytics from '../lib/analytics';
 
 export default function ProjectsPage() {
   const { navigate } = useRouter();
+  const projectsReveal = useScrollReveal();
+  
+  usePerformanceMonitor('ProjectsPage');
 
   const projects = [
     {
@@ -111,6 +119,11 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen pt-20">
+      <SEO 
+        title="Projects - Real-World DevOps Case Studies"
+        description="Explore successful cloud migration, Kubernetes deployment, CI/CD automation, and infrastructure projects. Real results from AWS, Terraform, and DevOps implementations."
+        keywords="DevOps Projects, Cloud Migration, Kubernetes Case Studies, AWS Projects, Terraform Infrastructure"
+      />
       <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
@@ -127,7 +140,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto space-y-16">
+        <div ref={projectsReveal.ref} className={`max-w-7xl mx-auto space-y-16 transition-all duration-1000 ${projectsReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {projects.map((project, index) => (
             <div
               key={index}
@@ -203,7 +216,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Start Your Project</h2>
           <p className="text-xl text-gray-600 mb-12">
@@ -211,8 +224,12 @@ export default function ProjectsPage() {
             and build a solution that scales.
           </p>
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => {
+              analytics.trackButtonClick('Projects - Schedule Consultation');
+              navigate('/contact');
+            }}
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg text-lg"
+            aria-label="Schedule a consultation"
           >
             Schedule a Consultation
           </button>

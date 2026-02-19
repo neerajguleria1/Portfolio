@@ -1,8 +1,16 @@
 import { Cloud, Server, Award, Shield, Code, Database, Zap, Users, CheckCircle } from 'lucide-react';
 import { useRouter } from '../router';
+import SEO from '../components/SEO';
+import ServiceCard from '../components/ServiceCard';
+import { useScrollReveal } from '../lib/useScrollReveal';
+import { usePerformanceMonitor } from '../lib/performance';
+import analytics from '../lib/analytics';
 
 export default function ServicesPage() {
   const { navigate } = useRouter();
+  const processReveal = useScrollReveal();
+  
+  usePerformanceMonitor('ServicesPage');
 
   const services = [
     {
@@ -154,7 +162,12 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen pt-20">
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <SEO 
+        title="Services - Professional DevOps & Cloud Solutions"
+        description="Expert AWS cloud architecture, CI/CD implementation, Kubernetes, Terraform IaC, monitoring, and DevOps consulting services."
+        keywords="AWS Services, DevOps Consulting, CI/CD, Kubernetes, Terraform, Cloud Migration"
+      />
+      <section className="py-20 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
             Professional
@@ -167,8 +180,12 @@ export default function ServicesPage() {
             From architecture design to implementation and support.
           </p>
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => {
+              analytics.trackButtonClick('Services - Free Consultation');
+              navigate('/contact');
+            }}
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+            aria-label="Get a free consultation"
           >
             Get a Free Consultation
           </button>
@@ -180,51 +197,16 @@ export default function ServicesPage() {
           <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">What I Offer</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-gray-200 group"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2 text-gray-700">
-                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3">Technologies:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {service.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <ServiceCard key={index} {...service} index={index} />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">How I Work</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div ref={processReveal.ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ${processReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {process.map((item, index) => (
               <div key={index} className="bg-white rounded-xl p-8 shadow-lg relative">
                 <div className="text-6xl font-bold text-blue-100 absolute top-4 right-4">
@@ -245,8 +227,12 @@ export default function ServicesPage() {
             Let's discuss your project and build a solution that scales with your business.
           </p>
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => {
+              analytics.trackButtonClick('Services - Schedule Consultation');
+              navigate('/contact');
+            }}
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg text-lg"
+            aria-label="Schedule a free consultation"
           >
             Schedule a Free Consultation
           </button>

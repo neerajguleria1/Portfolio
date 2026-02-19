@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight, Cloud, Server, Award, TrendingUp, Users,
-  CheckCircle, Code, Database, Shield
+  CheckCircle, Code, Database, Shield, Sparkles, Zap, Rocket
 } from 'lucide-react';
 import { useRouter } from '../router';
+import ParticlesBackground from '../components/ParticlesBackground';
+import MagneticCursor from '../components/MagneticCursor';
+import ServiceCard from '../components/ServiceCard';
+import SEO from '../components/SEO';
+import { useTypingEffect } from '../lib/useTypingEffect';
+import { useScrollReveal } from '../lib/useScrollReveal';
+import { usePerformanceMonitor } from '../lib/performance';
+import apiService from '../lib/apiService';
+import analytics from '../lib/analytics';
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -19,6 +28,12 @@ interface Blog {
 export default function HomePage() {
   const { navigate } = useRouter();
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const typedText = useTypingEffect('Cloud Infrastructure', 150);
+  const statsReveal = useScrollReveal();
+  const servicesReveal = useScrollReveal();
+  
+  usePerformanceMonitor('HomePage');
 
   useEffect(() => {
     fetchLatestBlogs();
@@ -26,13 +41,14 @@ export default function HomePage() {
 
   const fetchLatestBlogs = async () => {
     try {
-      const res = await fetch(`${API}`);
-      const data = await res.json();
-      if (data.success) {
-        setBlogs(data.blogs.slice(0, 3));
-      }
+      setLoading(true);
+      const data = await apiService.getBlogs();
+      setBlogs(data.slice(0, 3));
     } catch (err) {
       console.error('Failed to fetch blogs:', err);
+      analytics.trackError(err as Error, 'HomePage.fetchLatestBlogs');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,10 +93,13 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+      <SEO />
+      <MagneticCursor />
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
+        <ParticlesBackground />
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="absolute top-20 right-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute bottom-20 left-0 w-96 h-96 bg-purple-200 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute top-20 right-0 w-96 h-96 bg-indigo-300 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-20 left-0 w-96 h-96 bg-pink-300 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }}></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -91,39 +110,53 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                 Transform Your
-                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent animate-gradient">
-                  Cloud Infrastructure
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent animate-gradient flex items-center gap-3">
+                  {typedText}
+                  <Sparkles className="w-12 h-12 text-purple-500 animate-spin" style={{ animationDuration: '3s' }} />
                 </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
                 Building scalable, secure, and automated cloud solutions with AWS, Terraform,
                 and modern DevOps practices. Let's accelerate your digital transformation.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
                 <button
-                  onClick={() => navigate('/contact')}
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
+                  onClick={() => {
+                    analytics.trackButtonClick('Start Your Project');
+                    navigate('/contact');
+                  }}
+                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold overflow-hidden transition-all shadow-lg hover:shadow-2xl"
+                  aria-label="Start your cloud project"
                 >
-                  Start Your Project
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <Rocket className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    Start Your Project
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
                 <button
-                  onClick={() => navigate('/projects')}
+                  onClick={() => {
+                    analytics.trackButtonClick('View Case Studies');
+                    navigate('/projects');
+                  }}
                   className="px-8 py-4 bg-white text-gray-700 rounded-lg font-bold hover:bg-gray-50 transition-all shadow-md border-2 border-gray-200 flex items-center justify-center gap-2"
+                  aria-label="View our case studies"
                 >
                   View Case Studies
                 </button>
               </div>
 
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                {technologies.slice(0, 6).map((tech) => (
+              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start">
+                {technologies.slice(0, 6).map((tech, i) => (
                   <span
                     key={tech}
-                    className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-lg text-sm font-medium text-gray-700 shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+                    className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-lg text-sm font-medium text-gray-700 shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all hover:scale-110 cursor-pointer animate-fade-in"
+                    style={{ animationDelay: `${i * 100}ms` }}
                   >
                     {tech}
                   </span>
@@ -131,27 +164,27 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex-shrink-0 relative">
+              <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 relative mx-auto lg:mx-0">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
-              <img
-                src="/AQNxjHx8IfFv6ByqZgXTsTo-u0EJh3kKRvB_z7I0Mf1R6rJSQ_V9HjkWT-wQq67sA7DRjqSrDGB1p1LYf8sV4FxYNrpPjzIHWkT3JzeRG2AkxnEuWDW5hyHjN3rO_kM.jpeg"
-                alt="DevOps Expert"
-                className="relative w-72 h-72 md:w-96 md:h-96 rounded-3xl object-cover shadow-2xl border-8 border-white transform hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
-                <div className="text-white text-center">
-                  <div className="text-3xl font-bold">3+</div>
-                  <div className="text-xs">Years Exp</div>
+                <img
+                  src="/AQNxjHx8IfFv6ByqZgXTsTo-u0EJh3kKRvB_z7I0Mf1R6rJSQ_V9HjkWT-wQq67sA7DRjqSrDGB1p1LYf8sV4FxYNrpPjzIHWkT3JzeRG2AkxnEuWDW5hyHjN3rO_kM.jpeg"
+                  alt="DevOps Expert"
+                  className="relative w-full h-full rounded-3xl object-cover shadow-2xl border-4 sm:border-8 border-white transform hover:scale-105 hover:rotate-2 transition-all duration-500 animate-float"
+                />
+                <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
+                  <div className="text-white text-center">
+                    <div className="text-2xl sm:text-3xl font-bold">3+</div>
+                    <div className="text-xs">Years Exp</div>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
 
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div ref={statsReveal.ref} className={`grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 ${statsReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {stats.map((stat, index) => (
               <div
                 key={index}
@@ -170,7 +203,7 @@ export default function HomePage() {
 
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div ref={servicesReveal.ref} className={`text-center mb-16 transition-all duration-1000 ${servicesReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <span className="text-blue-600 font-semibold text-sm tracking-wider uppercase">Services</span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
               Comprehensive Cloud Solutions
@@ -182,24 +215,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all border border-gray-100 group"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-                <div className="grid grid-cols-2 gap-3">
-                  {service.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                      <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <ServiceCard key={index} {...service} index={index} />
             ))}
           </div>
 

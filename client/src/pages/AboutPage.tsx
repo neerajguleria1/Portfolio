@@ -1,8 +1,17 @@
 import { Award } from 'lucide-react';
 import { useRouter } from '../router';
+import SEO from '../components/SEO';
+import { useScrollReveal } from '../lib/useScrollReveal';
+import { usePerformanceMonitor } from '../lib/performance';
+import analytics from '../lib/analytics';
 
 export default function AboutPage() {
   const { navigate } = useRouter();
+  const experienceReveal = useScrollReveal();
+  const skillsReveal = useScrollReveal();
+  const certsReveal = useScrollReveal();
+  
+  usePerformanceMonitor('AboutPage');
 
   const skills = [
     { category: 'Cloud Platforms', items: ['AWS (EC2, S3, VPC, RDS, ELB)', 'Route 53, IAM, CloudFront', 'CloudWatch, ECR, ECS'] },
@@ -48,7 +57,12 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen pt-20">
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <SEO 
+        title="About - CloudDevOps Expert | AWS & DevOps Engineer"
+        description="Certified AWS & DevOps Engineer with 3+ years experience in cloud infrastructure, CI/CD, and automation. AWS Certified Developer & Terraform Associate."
+        keywords="AWS Engineer, DevOps Expert, Cloud Architect, Terraform, Kubernetes"
+      />
+      <section className="py-20 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -67,8 +81,12 @@ export default function AboutPage() {
                 cost-effective cloud solutions in fast-paced Agile environments.
               </p>
               <button
-                onClick={() => navigate('/contact')}
+                onClick={() => {
+                  analytics.trackButtonClick('About - Lets Work Together');
+                  navigate('/contact');
+                }}
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+                aria-label="Contact us to work together"
               >
                 Let's Work Together
               </button>
@@ -87,7 +105,7 @@ export default function AboutPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Experience</h2>
-          <div className="space-y-8">
+          <div ref={experienceReveal.ref} className={`space-y-8 transition-all duration-1000 ${experienceReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {experience.map((exp, index) => (
               <div key={index} className="bg-gray-50 rounded-xl p-8 border-l-4 border-blue-600">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
@@ -114,10 +132,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Technical Skills</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div ref={skillsReveal.ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ${skillsReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {skills.map((skill, index) => (
               <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{skill.category}</h3>
@@ -138,7 +156,7 @@ export default function AboutPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Certifications</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div ref={certsReveal.ref} className={`grid md:grid-cols-3 gap-8 transition-all duration-1000 ${certsReveal.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {certifications.map((cert, index) => (
               <div key={index} className="bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl p-8 border border-gray-200 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col items-center text-center gap-4">
