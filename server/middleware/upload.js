@@ -3,8 +3,7 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 
 const require = createRequire(import.meta.url);
-const CloudinaryStorageModule = require("multer-storage-cloudinary");
-const CloudinaryStorage = CloudinaryStorageModule.CloudinaryStorage || CloudinaryStorageModule.default || CloudinaryStorageModule;
+const multerStorageCloudinary = require("multer-storage-cloudinary");
 
 // Configure Cloudinary
 cloudinary.config({
@@ -14,7 +13,7 @@ cloudinary.config({
 });
 
 // Cloudinary storage
-const storage = new CloudinaryStorage({
+const storage = new multerStorageCloudinary.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "blog-uploads",
