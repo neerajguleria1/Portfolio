@@ -12,7 +12,15 @@ import { upload } from "../middleware/upload.js";
 const router = express.Router();
 
 // ✅ File upload with slug based routes
-router.post("/upload", upload.fields([{ name: "cover_image", maxCount: 1 }, { name: "content_images", maxCount: 10 }]), createBlog);
+router.post("/upload", (req, res, next) => {
+  upload.fields([{ name: "cover_image", maxCount: 1 }, { name: "content_images", maxCount: 10 }])(req, res, (err) => {
+    if (err) {
+      console.error('Multer error:', err);
+      return res.status(400).json({ success: false, error: err.message });
+    }
+    next();
+  });
+}, createBlog);
 router.get("/", getBlogs);
 router.get("/get/:id", getBlog);
 router.put("/:id", upload.fields([{ name: "coverImage", maxCount: 1 }, { name: "content_images", maxCount: 10 }]), updateBlog);
