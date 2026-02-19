@@ -1,9 +1,6 @@
-import { createRequire } from "module";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
-
-const require = createRequire(import.meta.url);
-const multerStorageCloudinary = require("multer-storage-cloudinary");
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -11,9 +8,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-// Cloudinary storage - handle both export formats
-const CloudinaryStorage = multerStorageCloudinary.CloudinaryStorage || multerStorageCloudinary;
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
