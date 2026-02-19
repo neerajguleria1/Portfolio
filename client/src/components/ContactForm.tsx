@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Send, Mail, User, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import toast from "react-hot-toast";
 import analytics from '../lib/analytics';
-import { useDebounce } from '../lib/useDebounce';
 
 const CONTACT_API = import.meta.env.VITE_CONTACT_API_URL;
 
@@ -33,15 +32,11 @@ export default function ContactForm() {
     }
   };
 
-  const debouncedValidate = useDebounce((name: string, value: string) => {
-    const error = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: error }));
-  }, 300);
-
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     if (touched[name]) {
-      debouncedValidate(name, value);
+      const error = validateField(name, value);
+      setErrors(prev => ({ ...prev, [name]: error }));
     }
   };
 
