@@ -14,8 +14,6 @@ import { usePerformanceMonitor } from '../lib/performance';
 import apiService from '../lib/apiService';
 import analytics from '../lib/analytics';
 
-const API = import.meta.env.VITE_API_URL;
-
 interface Blog {
   _id: string;
   title: string;
