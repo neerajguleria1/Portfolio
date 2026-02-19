@@ -181,17 +181,10 @@ export default function AdminCreatePost() {
                     <input
                       type="file"
                       accept="image/*"
-                      multiple
                       onChange={(e) => {
-                        const files = Array.from(e.target.files || []);
-                        if (files.length > 0) {
-                          const firstFile = files[0];
-                          updateBlock(index, URL.createObjectURL(firstFile), firstFile);
-                          
-                          // Add additional files as new image blocks
-                          files.slice(1).forEach(file => {
-                            setContentBlocks(prev => [...prev, { type: 'image', value: URL.createObjectURL(file), file }]);
-                          });
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          updateBlock(index, URL.createObjectURL(file), file);
                         }
                       }}
                     />
@@ -200,13 +193,29 @@ export default function AdminCreatePost() {
                 )}
               </div>
             ))}
-            <div className="flex gap-2">
+            <div className="flex gap-2 mb-3">
               <button type="button" onClick={() => addBlock("text")} className="bg-gray-600 text-white px-3 py-1 rounded flex items-center gap-1">
                 <Plus size={16} /> Text
               </button>
               <button type="button" onClick={() => addBlock("image")} className="bg-gray-600 text-white px-3 py-1 rounded flex items-center gap-1">
                 <Plus size={16} /> Image
               </button>
+            </div>
+            <div className="border-2 border-dashed border-gray-300 rounded p-4">
+              <label className="font-semibold block mb-2">Or Upload Multiple Images at Once</label>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  files.forEach(file => {
+                    setContentBlocks(prev => [...prev, { type: 'image', value: URL.createObjectURL(file), file }]);
+                  });
+                  e.target.value = '';
+                }}
+                className="w-full"
+              />
             </div>
           </div>
 
