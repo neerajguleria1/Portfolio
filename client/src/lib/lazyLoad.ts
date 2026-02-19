@@ -14,7 +14,6 @@ export function lazyLoad<T extends ComponentType<any>>(
   );
 }
 
-// Preload function for critical routes
 export function preloadComponent(importFunc: () => Promise<any>) {
   importFunc();
 }
