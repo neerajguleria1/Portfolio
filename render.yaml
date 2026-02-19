@@ -23,8 +23,18 @@ services:
     name: portfolio-client
     env: static
     region: oregon
-    buildCommand: cd client && npm install && npm run build && cp public/_redirects dist/_redirects
+    buildCommand: cd client && npm install && npm run build && echo '/*    /index.html   200' > dist/_redirects
     staticPublishPath: ./client/dist
     envVars:
       - key: NODE_ENV
         value: production
+      - key: VITE_API_URL
+        value: https://portfolio-server-jto0.onrender.com/api/blogs
+      - key: VITE_CONTACT_API_URL
+        value: https://portfolio-server-jto0.onrender.com/api/contact
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: VITE_ADMIN_PASSWORD
+        sync: false
