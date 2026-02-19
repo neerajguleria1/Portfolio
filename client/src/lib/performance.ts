@@ -1,24 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function usePerformanceMonitor(componentName: string) {
+  const renderStart = useRef(performance.now());
+
   useEffect(() => {
-    const startTime = performance.now();
+    const renderTime = performance.now() - renderStart.current;
 
-    return () => {
-      const endTime = performance.now();
-      const renderTime = endTime - startTime;
-
-      if (renderTime > 16) {
-        console.warn(`${componentName} render took ${renderTime.toFixed(2)}ms`);
-      }
-
-      if (window.gtag) {
-        window.gtag('event', 'timing_complete', {
-          name: componentName,
-          value: Math.round(renderTime),
-          event_category: 'Performance',
-        });
-      }
-    };
+    if (renderTime > 100) {
+      console.warn(`${componentName} initial render took ${renderTime.toFixed(2)}ms`);
+    }
   }, [componentName]);
 }

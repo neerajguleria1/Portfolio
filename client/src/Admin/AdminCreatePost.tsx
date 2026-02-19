@@ -181,10 +181,17 @@ export default function AdminCreatePost() {
                     <input
                       type="file"
                       accept="image/*"
+                      multiple
                       onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          updateBlock(index, URL.createObjectURL(file), file);
+                        const files = Array.from(e.target.files || []);
+                        if (files.length > 0) {
+                          const firstFile = files[0];
+                          updateBlock(index, URL.createObjectURL(firstFile), firstFile);
+                          
+                          // Add additional files as new image blocks
+                          files.slice(1).forEach(file => {
+                            setContentBlocks(prev => [...prev, { type: 'image', value: URL.createObjectURL(file), file }]);
+                          });
                         }
                       }}
                     />
