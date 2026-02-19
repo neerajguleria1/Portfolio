@@ -43,7 +43,7 @@ function AppContent() {
 
   // ✅ Route pages with Suspense
   const renderPage = () => {
-    const routes: Record<string, JSX.Element> = {
+    const routes: Record<string, React.ReactElement> = {
       '/': <HomePage />,
       '/about': <Suspense fallback={<LoadingSpinner />}><AboutPage /></Suspense>,
       '/services': <Suspense fallback={<LoadingSpinner />}><ServicesPage /></Suspense>,

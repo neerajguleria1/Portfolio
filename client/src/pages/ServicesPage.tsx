@@ -1,4 +1,4 @@
-import { Cloud, Server, Award, Shield, Code, Database, Zap, Users, CheckCircle } from 'lucide-react';
+import { Cloud, Server, Award, Shield, Code, Database, Zap, Users } from 'lucide-react';
 import { useRouter } from '../router';
 import SEO from '../components/SEO';
 import ServiceCard from '../components/ServiceCard';

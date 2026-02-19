@@ -1,7 +1,6 @@
 import { TrendingUp, Users, Clock } from 'lucide-react';
 import { useRouter } from '../router';
 import SEO from '../components/SEO';
-import OptimizedImage from '../components/OptimizedImage';
 import { useScrollReveal } from '../lib/useScrollReveal';
 import { usePerformanceMonitor } from '../lib/performance';
 import analytics from '../lib/analytics';

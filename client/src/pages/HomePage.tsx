@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight, Cloud, Server, Award, TrendingUp, Users,
-  CheckCircle, Code, Database, Shield, Sparkles, Zap, Rocket
+  Code, Database, Shield, Sparkles, Rocket
 } from 'lucide-react';
 import { useRouter } from '../router';
 import ParticlesBackground from '../components/ParticlesBackground';
@@ -28,7 +28,6 @@ interface Blog {
 export default function HomePage() {
   const { navigate } = useRouter();
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
   const typedText = useTypingEffect('Cloud Infrastructure', 150);
   const statsReveal = useScrollReveal();
   const servicesReveal = useScrollReveal();
@@ -41,14 +40,11 @@ export default function HomePage() {
 
   const fetchLatestBlogs = async () => {
     try {
-      setLoading(true);
       const data = await apiService.getBlogs();
       setBlogs(data.slice(0, 3));
     } catch (err) {
       console.error('Failed to fetch blogs:', err);
       analytics.trackError(err as Error, 'HomePage.fetchLatestBlogs');
-    } finally {
-      setLoading(false);
     }
   };
 

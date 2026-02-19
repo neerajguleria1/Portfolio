@@ -1,6 +1,6 @@
 import { CheckCircle } from 'lucide-react';
 import { useTilt } from '../lib/useTilt';
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 interface ServiceCardProps {
   icon: ComponentType<{ className?: string }>;
@@ -10,7 +10,7 @@ interface ServiceCardProps {
   index: number;
 }
 
-export default function ServiceCard({ icon: Icon, title, description, features, index }: ServiceCardProps) {
+export default function ServiceCard({ icon: Icon, title, description, features }: ServiceCardProps) {
   const tilt = useTilt();
 
   return (
