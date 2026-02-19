@@ -1,17 +1,19 @@
-import { lazy, Suspense, ComponentType } from 'react';
+import { lazy, Suspense, ComponentType, ReactElement } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-export function lazyLoad<T extends ComponentType<any>>(
-  importFunc: () => Promise<{ default: T }>,
-  fallback = <LoadingSpinner />
+export function lazyLoad(
+  importFunc: () => Promise<{ default: ComponentType<any> }>,
+  fallback: ReactElement = <LoadingSpinner />
 ) {
   const LazyComponent = lazy(importFunc);
 
-  return (props: any) => (
-    <Suspense fallback={fallback}>
-      <LazyComponent {...props} />
-    </Suspense>
-  );
+  return function LazyLoadedComponent(props: any) {
+    return (
+      <Suspense fallback={fallback}>
+        <LazyComponent {...props} />
+      </Suspense>
+    );
+  };
 }
 
 export function preloadComponent(importFunc: () => Promise<any>) {
