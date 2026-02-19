@@ -32,7 +32,7 @@ export default function BlogPage() {
 
     (async () => {
       try {
-        const res = await fetch(`${API}`);
+        const res = await fetch(`${API}?t=${Date.now()}`, { cache: 'no-store' });
         const data = await res.json();
 
         if (!data.success) return toast.error("Failed to load blogs");
@@ -52,7 +52,7 @@ export default function BlogPage() {
 
     (async () => {
       try {
-        const res = await fetch(`${API}/get/${blogId}`);
+        const res = await fetch(`${API}/get/${blogId}?t=${Date.now()}`, { cache: 'no-store' });
         const data = await res.json();
 
         if (!data.blog) {
