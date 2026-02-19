@@ -12,8 +12,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Cloudinary storage
-const storage = new multerStorageCloudinary.CloudinaryStorage({
+// Cloudinary storage - handle both export formats
+const CloudinaryStorage = multerStorageCloudinary.CloudinaryStorage || multerStorageCloudinary;
+
+const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "blog-uploads",
