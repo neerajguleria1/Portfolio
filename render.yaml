@@ -23,7 +23,7 @@ services:
     name: portfolio-client
     env: static
     region: oregon
-    buildCommand: cd client && npm install && npm run build
+    buildCommand: cd client && npm install && npm run build && cp public/_redirects dist/_redirects
     staticPublishPath: ./client/dist
     envVars:
       - key: NODE_ENV
