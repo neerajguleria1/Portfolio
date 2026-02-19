@@ -10,8 +10,8 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ error: "Title, excerpt, content & date required" });
     }
 
-    const cover_image = req.files?.cover_image?.[0] ? `/uploads/${req.files.cover_image[0].filename}` : "";
-    const content_images = req.files?.content_images?.map(file => `/uploads/${file.filename}`) || [];
+    const cover_image = req.files?.cover_image?.[0]?.path || "";
+    const content_images = req.files?.content_images?.map(file => file.path) || [];
 
     const blog = await Blog.create({
       title,
