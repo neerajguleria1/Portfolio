@@ -123,6 +123,15 @@ export default function Navbar() {
             ))}
             <button
               onClick={() => {
+                navigate('/admin');
+                setMobileMenuOpen(false);
+              }}
+              className="w-full px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-all"
+            >
+              Admin
+            </button>
+            <button
+              onClick={() => {
                 navigate('/contact');
                 setMobileMenuOpen(false);
               }}
