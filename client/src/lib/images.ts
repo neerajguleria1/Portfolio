@@ -3,7 +3,7 @@ export function resolveImageUrl(path?: string | null): string {
   if (!path) return fallback;
   if (/^https?:\/\//i.test(path)) return path;
 
-  const api = (import.meta as any).env?.VITE_API_URL as string | undefined;
+  const api = import.meta.env?.VITE_API_URL as string | undefined;
   if (!api) return path.startsWith("/") ? path : `/${path}`;
 
   let origin: string;
@@ -15,5 +15,6 @@ export function resolveImageUrl(path?: string | null): string {
 
   return path.startsWith("/") ? `${origin}${path}` : `${origin}/${path}`;
 }
+
 
 

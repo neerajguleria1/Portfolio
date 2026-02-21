@@ -10,8 +10,15 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ error: "Title, excerpt, content & date required" });
     }
 
+    console.log('Files received:', {
+      cover_image: req.files?.cover_image?.length || 0,
+      content_images: req.files?.content_images?.length || 0
+    });
+
     const cover_image = req.files?.cover_image?.[0]?.path || "";
     const content_images = req.files?.content_images?.map(file => file.path) || [];
+
+    console.log('Cloudinary URLs:', { cover_image, content_images });
 
     const blog = await Blog.create({
       title,
