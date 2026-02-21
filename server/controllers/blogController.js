@@ -15,8 +15,13 @@ export const createBlog = async (req, res) => {
       content_images: req.files?.content_images?.length || 0
     });
 
-    const cover_image = req.files?.cover_image?.[0]?.path || "";
-    const content_images = req.files?.content_images?.map(file => file.path) || [];
+    console.log('File details:', {
+      cover: req.files?.cover_image?.[0],
+      content: req.files?.content_images?.[0]
+    });
+
+    const cover_image = req.files?.cover_image?.[0]?.path || req.files?.cover_image?.[0]?.url || "";
+    const content_images = req.files?.content_images?.map(file => file.path || file.url) || [];
 
     console.log('Cloudinary URLs:', { cover_image, content_images });
 
