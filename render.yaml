@@ -23,8 +23,12 @@ services:
     name: portfolio-client
     env: static
     region: oregon
-    buildCommand: cd client && npm install && npm run build && echo '/*    /index.html   200' > dist/_redirects
+    buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: NODE_ENV
         value: production
