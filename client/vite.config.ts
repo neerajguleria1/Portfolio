@@ -12,4 +12,12 @@ export default defineConfig({
     host: true,
     port: 4173,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+  publicDir: 'public',
 })
