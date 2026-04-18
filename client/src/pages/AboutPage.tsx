@@ -32,7 +32,7 @@ export default function AboutPage() {
     {
       title: 'DevOps Engineer',
       company: 'Advent Global Solutions Pvt. Ltd',
-      period: 'July 2023 - Sep 2025',
+      period: 'Sep 2025 - Present',
       description: 'Designed and deployed AWS cloud infrastructure with automated CI/CD pipelines using Jenkins, Docker, and Kubernetes. Built Infrastructure as Code with Terraform, deployed microservices with 99.9% uptime using Helm charts, and implemented comprehensive monitoring with CloudWatch, Prometheus, and Grafana. Reduced deployment time by 40% through automation.',
       highlights: [
         'Automated deployments with Jenkins, reducing deployment time by 40%',
@@ -44,7 +44,7 @@ export default function AboutPage() {
     {
       title: 'AWS Trainer',
       company: 'Freelance / Training Institute',
-      period: 'Oct 2022 - Present',
+      period: 'Jan 2024 - Aug 2025',
       description: 'Conducting AWS training sessions for students and professionals, covering fundamental to advanced cloud concepts. Designed hands-on labs on EC2, VPC, IAM, S3, RDS, and other AWS services. Mentored learners on real-time projects and guided them towards AWS certifications.',
       highlights: [
         'Delivered comprehensive AWS training from fundamentals to advanced topics',
