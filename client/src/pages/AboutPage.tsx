@@ -63,7 +63,7 @@ export default function AboutPage() {
     <div className="min-h-screen pt-20">
       <SEO 
         title="About - CloudDevOps Expert | AWS & DevOps Engineer"
-        description="Certified AWS & DevOps Engineer with 3+ years experience in cloud infrastructure, CI/CD, and automation. AWS Certified Developer & Terraform Associate."
+        description="Certified AWS & DevOps Engineer with 2+ years experience in cloud infrastructure, CI/CD, and automation. AWS Certified Developer & Terraform Associate."
         keywords="AWS Engineer, DevOps Expert, Cloud Architect, Terraform, Kubernetes"
       />
       <section className="py-20 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">

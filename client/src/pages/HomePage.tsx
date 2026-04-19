@@ -49,7 +49,7 @@ export default function HomePage() {
   const stats = [
     { icon: Users, label: 'Happy Clients', value: '150+' },
     { icon: Code, label: 'Projects Delivered', value: '200+' },
-    { icon: Award, label: 'Years Experience', value: '3+' },
+    { icon: Award, label: 'Years Experience', value: '2+' },
     { icon: TrendingUp, label: 'Success Rate', value: '99%' },
   ];
 
