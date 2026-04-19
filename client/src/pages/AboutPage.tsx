@@ -28,34 +28,38 @@ export default function AboutPage() {
     { name: 'HashiCorp Certified: Terraform Associate (003)', issuer: 'HashiCorp', year: '2024' },
   ];
 
-  const experience = [
-    {
-      title: 'DevOps Engineer',
-      company: 'Advent Global Solutions Pvt. Ltd',
-      period: 'Sep 2025 - Present',
-      description: 'Designed and deployed AWS cloud infrastructure with automated CI/CD pipelines using Jenkins, Docker, and Kubernetes. Built Infrastructure as Code with Terraform, deployed microservices with 99.9% uptime using Helm charts, and implemented comprehensive monitoring with CloudWatch, Prometheus, and Grafana. Reduced deployment time by 40% through automation.',
-      highlights: [
-        'Automated deployments with Jenkins, reducing deployment time by 40%',
-        'Deployed microservices on Kubernetes with 99.9% uptime using Helm',
-        'Built modular Terraform infrastructure enabling scalable deployments',
-        'Implemented security scanning with Trivy and code quality checks with SonarQube'
-      ]
-    },
-    {
-      title: 'AWS Trainer',
-      company: 'Freelance / Training Institute',
-      period: 'Jan 2024 - Aug 2025',
-      description: 'Conducting AWS training sessions for students and professionals, covering fundamental to advanced cloud concepts. Designed hands-on labs on EC2, VPC, IAM, S3, RDS, and other AWS services. Mentored learners on real-time projects and guided them towards AWS certifications.',
-      highlights: [
-        'Delivered comprehensive AWS training from fundamentals to advanced topics',
-        'Created hands-on labs covering EC2, VPC, IAM, S3, and RDS',
-        'Mentored students toward AWS and Terraform certifications',
-        'Developed training materials and practical assignments'
-      ]
-    },
-  ];
-
-  return (
+ const experience = [
+  {
+    title: 'AWS DevOps Engineer – Freelancer (Contract)',
+    company: 'byteXL, True Minds',
+    period: 'Sep 2025 - Present',
+    description:
+      'Designed and managed AWS infrastructure using EC2, VPC, IAM, S3, ALB, and RDS for multiple DevOps projects. Automated infrastructure provisioning with modular Terraform, reducing setup time from 2 days to 30 minutes. Built CI/CD pipelines using Jenkins, GitHub, and GitHub Actions, reducing manual deployment effort by 70%. Deployed containerized applications on Kubernetes (EKS) with rolling updates, autoscaling, and zero deployment failures. Implemented IAM least privilege, CloudWatch monitoring, and resolved critical infrastructure issues with minimal downtime.',
+    highlights: [
+      'Reduced environment setup time by 60% using Terraform-based AWS infrastructure',
+      'Built CI/CD pipelines with Jenkins, GitHub, and GitHub Actions, reducing manual effort by 70%',
+      'Deployed 5+ containerized applications on Amazon EKS with zero deployment failures',
+      'Reduced provisioning time from 2 days to 30 minutes using modular Terraform',
+      'Implemented IAM least privilege and CloudWatch monitoring with zero unauthorized access incidents',
+      'Resolved 15+ critical deployment and infrastructure issues independently'
+    ]
+  },
+  {
+    title: 'AWS DevOps Engineer',
+    company: 'Advent Global Solutions Pvt. Ltd',
+    period: 'Jan 2024 - Aug 2025',
+    description:
+      'Designed and managed highly available AWS infrastructure including VPC, EC2, RDS, S3, IAM, ALB, and Route 53, maintaining 99.9% uptime. Built CI/CD pipelines using Jenkins, GitHub, Docker, SonarQube, and Nexus, reducing deployment cycle time by 40%. Implemented Infrastructure as Code with Terraform, deployed microservices on Amazon EKS with autoscaling and self-healing, integrated Trivy security scanning, and built centralized monitoring using CloudWatch, Prometheus, and Grafana.',
+    highlights: [
+      'Maintained 99.9% application uptime across AWS infrastructure',
+      'Reduced deployment cycle time by 40% using Jenkins, Docker, SonarQube, and Nexus',
+      'Implemented Terraform-based Infrastructure as Code to eliminate configuration drift',
+      'Deployed containerized microservices on Amazon EKS with autoscaling and self-healing',
+      'Integrated Trivy security scanning to prevent vulnerable images reaching production',
+      'Reduced AWS cloud costs by 40% through right-sizing and idle resource cleanup'
+    ]
+  }
+]; return (
     <div className="min-h-screen pt-20">
       <SEO 
         title="About - CloudDevOps Expert | AWS & DevOps Engineer"

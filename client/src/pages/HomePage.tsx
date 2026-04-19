@@ -167,7 +167,7 @@ export default function HomePage() {
                 />
                 <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl">
                   <div className="text-white text-center">
-                    <div className="text-2xl sm:text-3xl font-bold">3+</div>
+                    <div className="text-2xl sm:text-3xl font-bold">2+</div>
                     <div className="text-xs">Years Exp</div>
                   </div>
                 </div>
