@@ -74,7 +74,7 @@ export default function AboutPage() {
                 About Me
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed mb-6">
-                I'm a Certified AWS & DevOps Engineer with 3+ years of hands-on experience in designing
+                I'm a Certified AWS & DevOps Engineer with 2+ years of hands-on experience in designing
                 and managing cloud infrastructure, implementing CI/CD pipelines, automating deployments,
                 and containerizing applications.
               </p>
